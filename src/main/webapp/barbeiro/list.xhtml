@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+  <meta charset="UTF-8"/>
+  <title>Barbeiros</title>
+</h:head>
+<h:body>
+  <h:form id="form">
+    <p:growl id="growl" showDetail="true" life="4000"/>
+
+    <p:button value="Voltar"
+              outcome="/index.xhtml"
+              icon="pi pi-home"
+              style="margin-bottom:15px"/>
+
+    <p:panel id="painelCadastro"
+             header="Cadastro de Barbeiro">
+
+      <p:outputLabel value="Nome" for="nome"/>
+
+      <p:inputText id="nome"
+                   value="#{barbeiroController.barbeiro.nome}"
+                   required="true"
+                   style="width:300px"/>
+      <br/><br/>
+      <p:commandButton value="#{barbeiroController.update ? 'Atualizar' : 'Salvar'}"
+                       actionListener="#{barbeiroController.salvar}"
+                       update="form growl"
+                       process="@form"
+                       ajax="true"
+                       icon="pi pi-save"                       />
+
+
+      <p:commandButton value="Cancelar"
+                       action="#{barbeiroController.cancelar}"
+                       update=":form"
+                       process="@this"
+                       icon="pi pi-times"
+                       rendered="#{barbeiroController.update}"
+                       style="margin-left:10px"/>
+    </p:panel>
+
+    <br/>
+
+    <p:dataTable value="#{barbeiroController.barbeiros}"
+                 id="tabelaBarbeiros"
+                 var="b"
+                 paginator="true" rows="10"
+                 emptyMessage="Nenhum barbeiro cadastrado">
+
+      <p:column headerText="Nome">#{b.nome}</p:column>
+
+      <p:column headerText="Ações">
+        <p:commandButton icon="pi pi-pencil"
+                         action="#{barbeiroController.editar(b)}"
+                         update=":form:painelCadastro"
+                         process="@this"/>
+
+        <p:commandButton icon="pi pi-trash"
+                         action="#{barbeiroController.excluir(b)}"
+                         update=":form:msgs :form:tabelaBarbeiros"
+                         process="@this"
+                         style="margin-left:5px">
+          <p:confirm header="Confirmação"
+                     message="Deseja excluir este barbeiro?"/>
+        </p:commandButton>
+      </p:column>
+    </p:dataTable>
+
+    <p:confirmDialog global="true">
+      <p:commandButton value="Sim" type="button"
+                       styleClass="ui-confirmdialog-yes"/>
+      <p:commandButton value="Não" type="button"
+                       styleClass="ui-confirmdialog-no"/>
+    </p:confirmDialog>
+
+  </h:form>
+</h:body>
+</html>

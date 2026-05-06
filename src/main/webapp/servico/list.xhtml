@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta charset="UTF-8"/>
+  <title>Serviços</title>
+</h:head>
+<h:body>
+  <h:form id="form">
+    <p:growl id="growl" showDetail="true" life="4000"/>
+
+    <p:button value="Voltar"
+              outcome="/index.xhtml"
+              icon="pi pi-home"
+              style="margin-bottom:15px"/>
+
+    <p:panel id="painelCadastro"
+             header="Cadastro de Serviços">
+      <p:outputLabel value="Nome" for="nome"/>
+      <p:inputText id="nome" value="#{servicoController.servico.nome}"
+                   required="true" style="width:300px"/>
+      <br/><br/>
+
+      <p:outputLabel value="Preço" for="preco"/>
+      <p:inputMask id="preco"
+                   value="#{servicoController.servico.preco}"
+                   mask="9999.99"
+                   required="true"
+                   style="width:300px"/>
+      <br/><br/>
+
+      <p:outputLabel value="Duração" for="duracao"/>
+      <p:inputText id="duracao"
+                   value="#{servicoController.servico.duracaoMinutos}"
+                   style="width:300px"/>
+      <br/><br/>
+
+      <p:commandButton value="#{servicoController.update ? 'Atualizar' : 'Salvar'}"
+                       actionListener="#{servicoController.salvar}"
+                       update="form growl"
+                       process="@form"
+                       ajax="true"
+                       icon="pi pi-save"                       />
+
+
+      <p:commandButton value="Cancelar"
+                       action="#{servicoController.cancelar}"
+                       update=":form"
+                       process="@this"
+                       icon="pi pi-times"
+                       rendered="#{servicoController.update}"
+                       style="margin-left:10px"/>
+    </p:panel>
+
+    <br/>
+
+    <p:dataTable value="#{servicoController.servicos}"
+                 id="tabelaServicos"
+                 var="s"
+                 paginator="true" rows="10"
+                 emptyMessage="Nenhum serviço cadastrado">
+
+      <p:column headerText="Nome">#{s.nome}</p:column>
+      <p:column headerText="Preço">#{s.preco}</p:column>
+      <p:column headerText="Duração">#{s.duracaoMinutos}</p:column>
+
+      <p:column headerText="Ações">
+        <p:commandButton icon="pi pi-pencil"
+                         action="#{servicoController.editar(s)}"
+                         update=":form:painelCadastro"
+                         process="@this"/>
+
+        <p:commandButton icon="pi pi-trash"
+                         action="#{servicoController.excluir(s)}"
+                         update=":form:msgs :form:tabelaServicos"
+                         process="@this"
+                         style="margin-left:5px">
+          <p:confirm header="Confirmação"
+                     message="Deseja excluir este serviço?"/>
+        </p:commandButton>
+      </p:column>
+    </p:dataTable>
+
+    <p:confirmDialog global="true">
+      <p:commandButton value="Sim" type="button"
+                       styleClass="ui-confirmdialog-yes"/>
+      <p:commandButton value="Não" type="button"
+                       styleClass="ui-confirmdialog-no"/>
+    </p:confirmDialog>
+
+  </h:form>
+</h:body>
+</html>
