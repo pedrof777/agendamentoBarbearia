@@ -1,8 +1,8 @@
-# 💈 Agendamento Barbearia
+#  Agendamento Barbearia
 
 Sistema de agendamento para barbearia, com regras de negócio validadas por testes automatizados — evita conflitos de horário e garante integridade dos dados a cada mudança de código.
 
-## 📋 Sobre o projeto
+##  Sobre o projeto
 
 - Sistema web para agendamento de barbearia, permitindo o gerenciamento de clientes, horários e serviços.
 - Desenvolvido utilizando Jakarta EE e empacotado no formato WAR para implantação em servidor de aplicação.
@@ -15,11 +15,11 @@ Sistema de agendamento para barbearia, com regras de negócio validadas por test
 - Testes automatizados implementados com JUnit 5 e Mockito, garantindo validação das regras de negócio e isolamento de dependências.
 
 
-## 🛠️ Tecnologias
+##  Tecnologias
 
 Jakarta EE · JSF (MyFaces) · PrimeFaces · OmniFaces · CDI (Weld) · JPA/Hibernate · PostgreSQL · Tomcat · Maven · JUnit 5 · Mockito
 
-## 🚀 Como rodar
+##  Como rodar
 
 ### Pré-requisitos
 
